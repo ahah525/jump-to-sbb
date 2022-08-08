@@ -60,4 +60,30 @@ public class MainController {
     public int showIncrease() {
         return n++;
     }
+
+    @GetMapping("/gugudan")
+    @ResponseBody
+    public String showGugudan(@RequestParam(defaultValue = "2") int dan, @RequestParam(defaultValue = "9") int limit) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= limit; i++) {
+            sb.append("%d * %d = %d".formatted(dan, i, dan * i));
+            sb.append("<br>");
+        }
+        return sb.toString();
+    }
+
+    @GetMapping("/mbti")
+    @ResponseBody
+    public String showMbti(@RequestParam("name") String name) {
+        switch (name) {
+            case "홍길동":
+                return "INFP";
+            case "홍길순":
+                return "ENFP";
+            case "임꺽정":
+                return "INFJ";
+            default:
+                return "???";
+        }
+    }
 }
