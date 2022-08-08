@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class MainController {
@@ -66,12 +68,16 @@ public class MainController {
     @GetMapping("/gugudan")
     @ResponseBody
     public String showGugudan(@RequestParam(defaultValue = "2") int dan, @RequestParam(defaultValue = "9") int limit) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= limit; i++) {
-            sb.append("%d * %d = %d".formatted(dan, i, dan * i));
-            sb.append("<br>");
-        }
-        return sb.toString();
+        // 스트림 적용
+        return IntStream.rangeClosed(1, limit)
+                .mapToObj(i -> "%d * %d = %d".formatted(dan, i, dan * i))
+                .collect(Collectors.joining("<br>\n"));
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 1; i <= limit; i++) {
+//            sb.append("%d * %d = %d".formatted(dan, i, dan * i));
+//            sb.append("<br>");
+//        }
+//        return sb.toString();
     }
 
     @GetMapping("/mbti")
