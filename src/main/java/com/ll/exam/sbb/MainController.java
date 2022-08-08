@@ -77,16 +77,12 @@ public class MainController {
     @GetMapping("/mbti")
     @ResponseBody
     public String showMbti(@RequestParam("name") String name) {
-        switch (name) {
-            case "홍길동":
-                return "INFP";
-            case "홍길순":
-                return "ENFP";
-            case "임꺽정":
-                return "INFJ";
-            default:
-                return "???";
-        }
+        return switch (name) {
+            case "홍길동" -> "INFP";
+            case "홍길순" -> "ENFP";
+            case "임꺽정" -> "INFJ";
+            default -> "???";
+        };
     }
 
     // 세션 저장
