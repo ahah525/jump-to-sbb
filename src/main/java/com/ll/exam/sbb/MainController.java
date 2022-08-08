@@ -3,6 +3,8 @@ package com.ll.exam.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class MainController {
     private int n = 0;
@@ -85,5 +87,21 @@ public class MainController {
             default:
                 return "???";
         }
+    }
+
+    // 세션 저장
+    @GetMapping("/saveSession/{name}/{value}")
+    @ResponseBody
+    public String saveSession(@PathVariable("name") String name, @PathVariable("value") String value, HttpSession session) {
+        session.setAttribute(name, value);
+        return "세션변수 %s의 값이 %s(으)로 설정되었습니다.".formatted(name, value);
+    }
+
+    // 세션 정보 얻기
+    @GetMapping("/getSession/{name}")
+    @ResponseBody
+    public String getSession(@PathVariable("name") String name, HttpSession session) {
+        String value = (String) session.getAttribute(name);
+        return "세션변수 %s의 값이 %s 입니다.".formatted(name, value);
     }
 }
