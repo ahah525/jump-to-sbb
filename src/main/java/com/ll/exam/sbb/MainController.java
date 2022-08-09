@@ -112,8 +112,8 @@ public class MainController {
         return "세션변수 %s의 값이 %s 입니다.".formatted(name, value);
     }
 
-    //
-    @PostMapping("/addArticle")
+    // 게시글 등록
+    @GetMapping("/addArticle")
     @ResponseBody
     public String addArticle(@RequestParam("title") String title, @RequestParam("body") String body) {
         Article article = new Article(title, body);
@@ -122,6 +122,7 @@ public class MainController {
         return "%d번 글이 등록되었습니다.".formatted(article.getId());
     }
 
+    // 게시글 조회
     @GetMapping("/article/{id}")
     @ResponseBody
     public Article getArticle(@PathVariable("id") int id) {
@@ -135,5 +136,37 @@ public class MainController {
 //            }
 //        }
 //        return null;
+    }
+
+    // 게시글 수정
+    @GetMapping("/modifyArticle")
+    @ResponseBody
+    public String modifyArticle(@RequestParam("id") int id, @RequestParam("title") String title, @RequestParam("body") String body) {
+        Article findArticle = articles.stream()
+                .filter(article -> article.getId() == id)
+                .findAny()
+                .orElse(null);
+        if (findArticle != null) {
+            findArticle.setId(id);
+            findArticle.setTitle(title);
+            findArticle.setBody(body);
+            return "%d번 게시물이 수정되었습니다.".formatted(id);
+        }
+        return "%d번 게시물은 존재하지 않습니다.".formatted(id);
+    }
+
+    // 게시글 삭제
+    @GetMapping("/deleteArticle")
+    @ResponseBody
+    public String deleteArticle(@RequestParam("id") int id) {
+        Article findArticle = articles.stream()
+                .filter(article -> article.getId() == id)
+                .findAny()
+                .orElse(null);
+        if (findArticle != null) {
+            articles.remove(findArticle);
+            return "%d번 게시물이 삭제되었습니다.".formatted(id);
+        }
+        return "%d번 게시물은 존재하지 않습니다.".formatted(id);
     }
 }
