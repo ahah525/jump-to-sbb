@@ -4,15 +4,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
 public class MainController {
     private int n = 0;
+    private int last_id = 0;
+    private List<Article> articles = new ArrayList<>();
 
     @RequestMapping("/sbb")
     @ResponseBody// URL 요청에 대한 응답의 Body에 리턴값을 문자열로 리턴
+
     public String index() {
         System.out.println("Hello World");
         return "HelloWorld";
@@ -105,5 +110,30 @@ public class MainController {
     public String getSession(@PathVariable("name") String name, HttpSession session) {
         String value = (String) session.getAttribute(name);
         return "세션변수 %s의 값이 %s 입니다.".formatted(name, value);
+    }
+
+    //
+    @PostMapping("/addArticle")
+    @ResponseBody
+    public String addArticle(@RequestParam("title") String title, @RequestParam("body") String body) {
+        Article article = new Article(title, body);
+        articles.add(article);
+
+        return "%d번 글이 등록되었습니다.".formatted(article.getId());
+    }
+
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article getArticle(@PathVariable("id") int id) {
+        return articles.stream()
+                .filter(article -> article.getId() == id)
+                .findAny()
+                .orElse(null);
+//        for (Article article : articles) {
+//            if (article.getId() == id) {
+//                return article;
+//            }
+//        }
+//        return null;
     }
 }
