@@ -171,8 +171,8 @@ public class MainController {
         return "%d번 게시물은 존재하지 않습니다.".formatted(id);
     }
 
-    //
-
+    // 회원 등록
+    // @GetMapping("/addPerson/{id}")
     @GetMapping("/addPerson")
     @ResponseBody
     public String addPerson(Person person) {
@@ -180,6 +180,7 @@ public class MainController {
         return "%d번 사람이 등록되었습니다.".formatted(person.getId());
     }
 
+    // 회원 조회
     @GetMapping("/person/{id}")
     @ResponseBody
     public Person getPerson(@PathVariable("id") int id) {
