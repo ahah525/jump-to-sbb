@@ -14,6 +14,7 @@ public class MainController {
     private int n = 0;
     private int last_id = 0;
     private List<Article> articles = new ArrayList<>();
+    private List<Person> people = new ArrayList<>();
 
     @RequestMapping("/sbb")
     @ResponseBody// URL 요청에 대한 응답의 Body에 리턴값을 문자열로 리턴
@@ -168,5 +169,23 @@ public class MainController {
             return "%d번 게시물이 삭제되었습니다.".formatted(id);
         }
         return "%d번 게시물은 존재하지 않습니다.".formatted(id);
+    }
+
+    //
+
+    @GetMapping("/addPerson")
+    @ResponseBody
+    public String addPerson(Person person) {
+        people.add(person);
+        return "%d번 사람이 등록되었습니다.".formatted(person.getId());
+    }
+
+    @GetMapping("/person/{id}")
+    @ResponseBody
+    public Person getPerson(@PathVariable("id") int id) {
+        return people.stream()
+                .filter(p -> p.getId() == id)
+                .findAny()
+                .orElse(null);
     }
 }
