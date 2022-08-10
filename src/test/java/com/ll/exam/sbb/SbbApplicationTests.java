@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -62,8 +61,15 @@ class SbbApplicationTests {
 	}
 
 	@Test
-	void findBySubjectAndContent() {
+	void findBySubjectAndContentJpa() {
 		List<Question> questions = this.questionRepository.findBySubjectAndContent("sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
 		assertThat(questions.get(0).getId()).isEqualTo(1);
+	}
+
+	@Test
+	void findBySubjectLikeJpa() {
+		List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
+		Question q = qList.get(0);
+		assertThat(q.getSubject()).isEqualTo("sbb가 무엇인가요?");
 	}
 }
