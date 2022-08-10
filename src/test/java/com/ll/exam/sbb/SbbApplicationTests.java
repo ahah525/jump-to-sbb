@@ -54,4 +54,10 @@ class SbbApplicationTests {
 		Question question = oq.orElse(null);
 		assertThat(question.getSubject()).isEqualTo("sbb가 무엇인가요?");
 	}
+
+	@Test
+	void findBySubjectJpa() {
+		List<Question> questions = this.questionRepository.findBySubject("sbb가 무엇인가요?");
+		assertThat(questions.get(0).getId()).isEqualTo(1);
+	}
 }
