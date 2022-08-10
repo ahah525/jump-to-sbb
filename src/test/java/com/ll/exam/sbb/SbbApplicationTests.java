@@ -38,4 +38,13 @@ class SbbApplicationTests {
 		assertThat(q1.getId()).isGreaterThan(0);
 		assertThat(q2.getId()).isGreaterThan(q1.getId());
 	}
+
+	@Test
+	void findAllJpa() {
+		List<Question> all = this.questionRepository.findAll();
+		assertThat(all.size()).isEqualTo(2);
+
+		Question q = all.get(0);
+		assertThat(q.getSubject()).isEqualTo("sbb가 무엇인가요?");
+	}
 }
