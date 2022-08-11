@@ -14,13 +14,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QuestionRepositoryTest {
     @Autowired
     private QuestionRepository questionRepository;
+    private static int lastSampleDataId;
 
     @BeforeEach
-    void setting() {
+    void beforeEach() {
+        clearData(questionRepository);
+        createSampleData(questionRepository);
+    }
+
+    public static void clearData(QuestionRepository questionRepository) {
         questionRepository.disableForeignKeyCheck();
         questionRepository.truncateQuestion();
         questionRepository.enableForeignKeyCheck();
+    }
 
+    public static void createSampleData(QuestionRepository questionRepository) {
         Question q1 = new Question();
         q1.setSubject("제목1");
         q1.setContent("내용1");
@@ -33,6 +41,8 @@ class QuestionRepositoryTest {
         q2.setCreateDate(LocalDateTime.now());
 
         questionRepository.save(q2);
+
+        lastSampleDataId = q2.getId();
     }
 
     @Test
