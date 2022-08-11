@@ -8,23 +8,13 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 // <어떤 Entity의 Repository인지, Key의 type>
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
+public interface QuestionRepository extends JpaRepository<Question, Integer>, RepositoryUtil {
 
     List<Question> findBySubject(String subject);
 
     List<Question> findBySubjectAndContent(String subject, String content);
 
     List<Question> findBySubjectLike(String subject);
-
-    @Transactional
-    @Modifying
-    @Query(value = "SET FOREIGN_KEY_CHECKS = 0", nativeQuery = true)
-    void disableForeignKeyCheck();
-
-    @Transactional
-    @Modifying
-    @Query(value = "SET FOREIGN_KEY_CHECKS = 1", nativeQuery = true)
-    void enableForeignKeyCheck();
 
     @Transactional
     @Modifying

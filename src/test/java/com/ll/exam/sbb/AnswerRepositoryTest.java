@@ -25,7 +25,9 @@ class AnswerRepositoryTest {
         // question truncate
         QuestionRepositoryTest.clearData(questionRepository);
         // answer truncate
+        answerRepository.disableForeignKeyCheck();
         answerRepository.truncateAnswer();
+        answerRepository.enableForeignKeyCheck();
     }
 
     private void createSampleData() {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 
 // <어떤 Entity의 Repository인지, Key의 type>
-public interface AnswerRepository extends JpaRepository<Answer, Integer> {
+public interface AnswerRepository extends JpaRepository<Answer, Integer>, RepositoryUtil {
 
     @Transactional
     @Modifying
