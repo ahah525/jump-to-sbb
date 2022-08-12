@@ -1,5 +1,7 @@
-package com.ll.exam.sbb;
+package com.ll.exam.sbb.question;
 
+import com.ll.exam.sbb.question.Question;
+import com.ll.exam.sbb.question.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
