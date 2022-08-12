@@ -1,12 +1,12 @@
 package com.ll.exam.sbb;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,5 +29,5 @@ public class Question {
     // Question 에서 Answer로 쉽게 접근 가능하도록(굳이 안해도 됨)
     // CascadeType.Remove: Question 삭제하면 Answer 자동 삭제됨
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answerList;
+    private List<Answer> answerList = new ArrayList<>();
 }
