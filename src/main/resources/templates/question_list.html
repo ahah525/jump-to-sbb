@@ -14,9 +14,7 @@
             <td>
                 [[${question.subject}]]
             </td>
-            <td>
-                [[${question.createDate}]]
-            </td>
+            <td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></td>
         </tr>
     </tbody>
 </table>
