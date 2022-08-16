@@ -1,17 +1,20 @@
 package com.ll.exam.sbb.answer;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.*;
-
 import com.ll.exam.sbb.question.Question;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +29,8 @@ public class Answer {
     // Answer : Question = N : 1
     @ManyToOne
     private Question question;
+
+    public Answer() {
+
+    }
 }
