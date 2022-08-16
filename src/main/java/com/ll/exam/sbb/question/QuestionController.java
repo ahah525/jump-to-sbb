@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -24,11 +23,5 @@ public class QuestionController {
         model.addAttribute("questionList", questionList);
 
         return "question_list";
-    }
-
-    @RequestMapping("/question/list2")
-    @ResponseBody
-    public String list2() {
-        return "하하111777";
     }
 }
