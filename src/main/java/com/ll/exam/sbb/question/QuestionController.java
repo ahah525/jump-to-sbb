@@ -24,4 +24,10 @@ public class QuestionController {
 
         return "question_list";
     }
+
+    // 리다이렉트
+    @RequestMapping("/")
+    public String root() {
+        return "redirect:/question/list";
+    }
 }
