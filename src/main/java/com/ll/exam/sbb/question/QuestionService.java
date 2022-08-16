@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,13 +12,8 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     public Question getQuestion(int id) {
-        Optional<Question> question = questionRepository.findById(id);
-
-        if (question.isPresent()) {
-            return question.get();
-        }
-
-        throw new DataNotFoundException("question not found");
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
     }
 
     public List<Question> getList() {
