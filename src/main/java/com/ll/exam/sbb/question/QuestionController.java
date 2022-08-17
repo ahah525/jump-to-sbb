@@ -36,6 +36,7 @@ public class QuestionController {
     // 리다이렉트
     @RequestMapping("/")
     public String root() {
+        System.out.println("dd");
         return "redirect:/question/list";
     }
 }
