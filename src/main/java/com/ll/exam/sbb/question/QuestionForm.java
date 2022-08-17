@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class QuestionForm {
+
     private String subject;
     private String content;
 }
