@@ -29,6 +29,6 @@ public class AnswerController {
             return "question_detail";
         }
         answerService.save(question, answerForm.getContent());
-       return String.format("redirect:/question/detail/%s", questionId);
+        return String.format("redirect:/question/detail/%s", questionId);
     }
 }
