@@ -4,6 +4,7 @@ import com.ll.exam.sbb.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,5 +19,14 @@ public class QuestionService {
 
     public List<Question> getList() {
         return questionRepository.findAll();
+    }
+
+    public void save(QuestionForm questionForm) {
+        Question question = Question.builder()
+                .subject(questionForm.getSubject())
+                .content(questionForm.getContent())
+                .createDate(LocalDateTime.now())
+                .build();
+        questionRepository.save(question);
     }
 }
