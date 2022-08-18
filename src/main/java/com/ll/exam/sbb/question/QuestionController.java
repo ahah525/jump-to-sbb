@@ -33,6 +33,7 @@ public class QuestionController {
         return "redirect:/question/list";
     }
 
+    // 해당 페이지 번호의 게시글 리스트 조회
     @GetMapping("/list")
     // 이 자리에 @ResponseBody가 없으면 resources/question_list/question_list.html 파일을 뷰로 삼는다.
     public String list(Model model, @RequestParam(defaultValue = "0") int page) {
