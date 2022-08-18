@@ -17,6 +17,14 @@ public class UserService {
         // 비밀번호 bcrypt 암호화
         user.setPassword(passwordEncoder.encode(password));
 
+        SiteUser user1 = userRepository.findByUsername(username).orElse(null);
+        if (user1 != null) {
+            throw new SignupUsernameDuplicatedException("이미 사용중인 username 입니다.");
+        }
+        SiteUser user2 = userRepository.findByEmail(email).orElse(null);
+        if (user2 != null) {
+            throw new SignupEmailDuplicatedException("이미 사용중인 email 입니다.");
+        }
         userRepository.save(user);
 
         return user;
