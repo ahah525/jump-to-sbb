@@ -17,7 +17,7 @@ import java.util.List;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-    public Question getQuestion(int id) {
+    public Question getQuestion(Long id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
     }

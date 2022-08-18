@@ -20,7 +20,7 @@ public class AnswerController {
     private final QuestionService questionService;
 
     @PostMapping("/create/{id}")
-    public String save(Model model, @PathVariable("id") int questionId, @Valid AnswerForm answerForm, BindingResult bindingResult) {
+    public String save(Model model, @PathVariable("id") Long questionId, @Valid AnswerForm answerForm, BindingResult bindingResult) {
         Question question = questionService.getQuestion(questionId);
 
         // 필수 입력 폼 유효성 검증
