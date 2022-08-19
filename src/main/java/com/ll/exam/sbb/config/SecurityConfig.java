@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +38,11 @@ public class SecurityConfig {
                     .formLogin()
                     .loginPage("/user/login")   // 로그인 url
                     .defaultSuccessUrl("/")     // 로그인 성공 시 이동 페이지
+                .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
         ;
 
         return http.build();
