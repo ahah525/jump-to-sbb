@@ -16,6 +16,12 @@ public class MainController {
     private List<Article> articles = new ArrayList<>();
     private List<Person> people = new ArrayList<>();
 
+    // 리다이렉트
+    @RequestMapping("/")
+    public String root() {
+        return "redirect:/question/list";
+    }
+
     @RequestMapping("/sbb")
     @ResponseBody// URL 요청에 대한 응답의 Body에 리턴값을 문자열로 리턴
 
