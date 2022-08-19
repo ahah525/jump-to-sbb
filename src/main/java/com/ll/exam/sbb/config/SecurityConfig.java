@@ -15,16 +15,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                // 모든 경로
-                .antMatchers("/**")
-                // 허용
-                .permitAll()
+                    // 모든 경로
+                    .antMatchers("/**")
+                    // 허용
+                    .permitAll()
                 .and()
-                .csrf().ignoringAntMatchers("/h2-console/**")
+                    .csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
-                .headers()
-                .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+                    .headers()
+                    .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and()
+                // spring security 로그인 설정
+                    .formLogin()
+                    .loginPage("/user/login")   // 로그인 url
+                    .defaultSuccessUrl("/")     // 로그인 성공 시 이동 페이지
+        ;
 
         return http.build();
     }
