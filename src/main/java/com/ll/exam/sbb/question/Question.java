@@ -1,6 +1,7 @@
 package com.ll.exam.sbb.question;
 
 import com.ll.exam.sbb.answer.Answer;
+import com.ll.exam.sbb.user.SiteUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +34,9 @@ public class Question {
     // CascadeType.Remove: Question 삭제하면 Answer 자동 삭제됨
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answerList = new ArrayList<>();
+
+    @ManyToOne
+    private SiteUser author;
 
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
