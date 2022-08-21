@@ -31,9 +31,16 @@ class UserServiceTest {
 
     // 외부용
     public static void clearData(UserRepository userRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
+//        AnswerRepositoryTest.clearData(answerRepository, questionRepository);
+//        QuestionRepositoryTest.clearData(questionRepository);
+//
+//        userRepository.deleteAll();
         // Answer -> Question -> SiteUser 순으로 삭제
-        AnswerRepositoryTest.clearData(answerRepository, questionRepository);
-        QuestionRepositoryTest.clearData(questionRepository);
+        answerRepository.deleteAll();
+        answerRepository.truncateTable();
+
+        questionRepository.deleteAll();
+        questionRepository.truncateTable();
 
         userRepository.deleteAll();
         userRepository.truncateTable();

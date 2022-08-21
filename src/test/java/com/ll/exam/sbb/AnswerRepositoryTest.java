@@ -33,16 +33,21 @@ public class AnswerRepositoryTest {
         createSampleData();
     }
 
-    // 외부용
-    public static void clearData(AnswerRepository answerRepository, QuestionRepository questionRepository) {
-        QuestionRepositoryTest.clearData(questionRepository);
+//    // 외부용
+//    public static void clearData(AnswerRepository answerRepository, QuestionRepository questionRepository) {
+//        QuestionRepositoryTest.clearData(questionRepository);
+//
+//        answerRepository.deleteAll(); // DELETE FROM question;
+//        answerRepository.truncateTable();
+//    }
 
-        answerRepository.deleteAll(); // DELETE FROM question;
-        answerRepository.truncateTable();
+    public static void clearData(UserRepository userRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
+        UserServiceTest.clearData(userRepository, answerRepository, questionRepository);
     }
 
     private void clearData() {
-        clearData(answerRepository, questionRepository);
+//        clearData(answerRepository, questionRepository);
+        clearData(userRepository, answerRepository, questionRepository);
     }
 
     private void createSampleData() {
