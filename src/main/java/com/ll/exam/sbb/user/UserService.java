@@ -1,5 +1,6 @@
 package com.ll.exam.sbb.user;
 
+import com.ll.exam.sbb.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,13 @@ public class UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    // username으로 SiteUser 조회
+    public SiteUser getUser(String username) {
+        SiteUser siteUser = userRepository.findByUsername(username).orElseThrow(() -> {
+            throw new DataNotFoundException("siteuser not found");
+        });
+        return siteUser;
     }
 }
