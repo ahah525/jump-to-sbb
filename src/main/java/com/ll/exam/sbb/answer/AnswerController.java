@@ -1,5 +1,6 @@
 package com.ll.exam.sbb.answer;
 
+import com.ll.exam.sbb.DataNotFoundException;
 import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionService;
 import com.ll.exam.sbb.user.SiteUser;
@@ -48,6 +49,9 @@ public class AnswerController {
     @GetMapping("/modify/{id}")
     public String modifyForm(@PathVariable("id") Long id, AnswerForm answerForm, Principal principal) {
         Answer answer = answerService.getAnswer(id);
+        if (answer == null) {
+            throw new DataNotFoundException("%d번 답변은 존재하지 않습니다.".formatted(id));
+        }
         // 글쓴이
         if (!answer.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
@@ -65,7 +69,9 @@ public class AnswerController {
             return "answer_form";
         }
         Answer answer = answerService.getAnswer(id);
-
+        if (answer == null) {
+            throw new DataNotFoundException("%d번 답변은 존재하지 않습니다.".formatted(id));
+        }
         if (!answer.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
@@ -74,4 +80,20 @@ public class AnswerController {
         return "redirect:/question/detail/%d".formatted(answer.getQuestion().getId());
     }
 
+
+    // 답변 삭제
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id, Principal principal) {
+        Answer answer = answerService.getAnswer(id);
+        if (answer == null) {
+            throw new DataNotFoundException("%d번 답변은 존재하지 않습니다.".formatted(id));
+        }
+        if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        answerService.delete(answer);
+
+        return "redirect:/question/detail/%d".formatted(answer.getQuestion().getId());
+    }
 }
