@@ -1,5 +1,6 @@
 package com.ll.exam.sbb.question;
 
+import com.ll.exam.sbb.DataNotFoundException;
 import com.ll.exam.sbb.answer.AnswerForm;
 import com.ll.exam.sbb.user.SiteUser;
 import com.ll.exam.sbb.user.UserService;
@@ -101,6 +102,24 @@ public class QuestionController {
         return "redirect:/question/detail/%d".formatted(id);
     }
 
+    // 게시글 삭제
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id, Principal principal) {
+        Question question = questionService.getQuestion(id);
+
+        if (question == null) {
+            throw new DataNotFoundException("%d번 질문은 존재하지 않습니다.".formatted(id));
+        }
+
+        // 작성자 확인
+        if (!principal.getName().equals(question.getAuthor().getUsername())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+
+        questionService.delete(question);
+
+        return "redirect:/";
+    }
 
     // 리다이렉트
     @RequestMapping("/")
