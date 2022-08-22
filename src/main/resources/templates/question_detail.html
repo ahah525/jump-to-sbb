@@ -36,8 +36,14 @@
     <!-- 답변 작성 -->
     <form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
         <div th:replace="form_errors :: formErrorsFragment"></div>
-        <textarea class="form-control" name="content" rows="10"></textarea>
-        <button type="submit" class="btn btn-dark my-2">답변등록</button>
+        <!-- 비로그인 회원 답변폼 비활성화 -->
+        <textarea sec:authorize="isAnonymous()" disabled class="form-control" name="content" rows="10"></textarea>
+        <!-- 로그인 회원 답변폼 활성화 -->
+        <textarea sec:authorize="isAuthenticated()" class="form-control" name="content" rows="10"></textarea>
+        <!-- 비로그인 회원 답변폼 비활성화 -->
+        <button sec:authorize="isAnonymous()" disabled type="submit" class="btn btn-dark my-2">답변등록</button>
+        <!-- 로그인 회원 답변폼 활성화 -->
+        <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-dark my-2">답변등록</button>
     </form>
 </div>
 </html>
