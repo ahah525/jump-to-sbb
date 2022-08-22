@@ -5,8 +5,10 @@
 
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
-
-    <form th:action="@{/question/create}" th:object="${questionForm}" method="POST">
+    <!-- 요청된 url 형태로 POST 요청 보내짐 -->
+    <form th:object="${questionForm}" method="POST">
+        <!-- csrf 수동 추가 -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <!-- 폼 필수 항목 오류 메시지 -->
         <div th:replace="form_errors :: formErrorsFragment"></div>
         <div class="mb-3">

@@ -43,4 +43,12 @@ public class QuestionService {
 
         questionRepository.save(question);
     }
+
+    public void modify(Question question, QuestionForm questionForm) {
+        question.setSubject(questionForm.getSubject());
+        question.setContent(questionForm.getContent());
+        question.setModifyDate(LocalDateTime.now());
+
+        questionRepository.save(question);
+    }
 }

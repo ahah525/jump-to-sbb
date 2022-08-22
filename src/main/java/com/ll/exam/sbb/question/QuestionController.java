@@ -82,6 +82,25 @@ public class QuestionController {
         return "question_form";
     }
 
+    // 게시글 수정
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modify/{id}")
+    public String modify(@PathVariable("id") Long id, @Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
+        // 입력되지 않은 값이 있으면 폼으로
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+
+        Question question = questionService.getQuestion(id);
+        // 작성자 확인하기
+        if (!(question.getAuthor().getUsername()).equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        questionService.modify(question, questionForm);
+
+        return "redirect:/question/detail/%d".formatted(id);
+    }
+
 
     // 리다이렉트
     @RequestMapping("/")
