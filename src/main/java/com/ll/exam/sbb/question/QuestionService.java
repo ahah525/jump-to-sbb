@@ -1,6 +1,7 @@
 package com.ll.exam.sbb.question;
 
 import com.ll.exam.sbb.DataNotFoundException;
+import com.ll.exam.sbb.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,12 +33,14 @@ public class QuestionService {
         return questionRepository.findAll(pageable);
     }
 
-    public void save(QuestionForm questionForm) {
+    public void save(QuestionForm questionForm, SiteUser siteUser) {
         Question question = Question.builder()
                 .subject(questionForm.getSubject())
                 .content(questionForm.getContent())
                 .createDate(LocalDateTime.now())
+                .author(siteUser)
                 .build();
+
         questionRepository.save(question);
     }
 }

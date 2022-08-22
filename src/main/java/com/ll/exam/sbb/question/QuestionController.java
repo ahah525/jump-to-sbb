@@ -1,6 +1,8 @@
 package com.ll.exam.sbb.question;
 
 import com.ll.exam.sbb.answer.AnswerForm;
+import com.ll.exam.sbb.user.SiteUser;
+import com.ll.exam.sbb.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -9,12 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor // 생성자 주입
 @RequestMapping("/question")
 public class QuestionController {
     private final QuestionService questionService;
+    private final UserService userService;
 
     @GetMapping("/create")
     public String createForm(QuestionForm questionForm) {
@@ -23,13 +27,15 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+    public String create(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
         // 유효성 검증에서 에러가 발견되면 폼으로 돌아가기
         if (bindingResult.hasErrors()) {
             return "question_form";
         }
+        SiteUser siteUser = userService.getUser(principal.getName());
         // 질문 저장 후 질문 리스트로 리다이렉트
-        questionService.save(questionForm);
+        questionService.save(questionForm, siteUser);
+
         return "redirect:/question/list";
     }
 
