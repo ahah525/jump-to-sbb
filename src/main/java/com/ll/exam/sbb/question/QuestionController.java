@@ -5,6 +5,7 @@ import com.ll.exam.sbb.user.SiteUser;
 import com.ll.exam.sbb.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,12 +21,15 @@ public class QuestionController {
     private final QuestionService questionService;
     private final UserService userService;
 
+    // @PreAuthorize("isAuthenticated()") : 로그인이 필요한 메서드
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String createForm(QuestionForm questionForm) {
         // 질문 등록 폼의 th:object 때문에 QuestionForm 객체를 매개변수로 받아야 함
         return "question_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String create(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
         // 유효성 검증에서 에러가 발견되면 폼으로 돌아가기
