@@ -4,6 +4,7 @@
         layout:decorate="~{layout}"
 >
 
+<!-- 질문 -->
 <div layout:fragment="content" class="container my-3">
     <h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
     <div class="card my-3">
@@ -15,6 +16,13 @@
                     <div th:text="${question.author.username}" class="mb-2"></div>
                     <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
+            </div>
+            <!-- 인가된 회원만 수정 -->
+            <!-- #authentication.getPrincipal() == 현재 로그인한 회원정보 -->
+            <div>
+                <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-outline-secondary" th:text="수정"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${#authentication.getPrincipal().getUsername() == question.author.username}"></a>
             </div>
         </div>
     </div>
