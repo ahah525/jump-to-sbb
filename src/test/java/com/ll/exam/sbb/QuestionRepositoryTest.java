@@ -5,6 +5,7 @@ import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionRepository;
 import com.ll.exam.sbb.user.SiteUser;
 import com.ll.exam.sbb.user.UserRepository;
+import com.ll.exam.sbb.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class QuestionRepositoryTest {
     @Autowired
+    private UserService userService;
+    @Autowired
     private QuestionRepository questionRepository;
     @Autowired
     private AnswerRepository answerRepository;
@@ -35,9 +38,11 @@ public class QuestionRepositoryTest {
         createSampleData();
     }
 
-    public static long createSampleData(QuestionRepository questionRepository, UserRepository userRepository) {
+    public static long createSampleData(UserService userService, QuestionRepository questionRepository) {
 //        SiteUser admin = userRepository.findByUsername("admin").orElse(null);
 //        SiteUser user1 = userRepository.findByUsername("user1").orElse(null);
+        UserServiceTest.createSampleData(userService);
+
         Question q1 = new Question();
         q1.setSubject("sbb가 무엇인가요?");
         q1.setContent("sbb에 대해서 알고 싶습니다.");
@@ -56,7 +61,7 @@ public class QuestionRepositoryTest {
     }
 
     private void createSampleData() {
-        lastSampleDataId = createSampleData(questionRepository, userRepository);
+        lastSampleDataId = createSampleData(userService, questionRepository);
     }
 
 //    public static void clearData(QuestionRepository questionRepository) {
