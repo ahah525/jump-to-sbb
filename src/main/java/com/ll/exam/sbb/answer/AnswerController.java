@@ -40,8 +40,8 @@ public class AnswerController {
             model.addAttribute("question", question);
             return "question_detail";
         }
-        answerService.save(question, answerForm.getContent(), siteUser);
-        return String.format("redirect:/question/detail/%s", questionId);
+        Long answerId = answerService.save(question, answerForm.getContent(), siteUser);
+        return String.format("redirect:/question/detail/%d#answer_%d", questionId, answerId);
     }
 
     // 답변 수정폼
