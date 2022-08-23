@@ -121,6 +121,17 @@ public class QuestionController {
         return "redirect:/";
     }
 
+    // 게시글 추천
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(@PathVariable("id") Long id, Principal principal) {
+        Question question = questionService.getQuestion(id);
+        SiteUser siteUser = userService.getUser(principal.getName());
+        questionService.vote(question, siteUser);
+
+        return "redirect:/question/detail/%d".formatted(id);
+    }
+
     // 리다이렉트
     @RequestMapping("/")
     public String root() {
