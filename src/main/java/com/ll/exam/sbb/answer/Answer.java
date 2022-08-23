@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,4 +34,8 @@ public class Answer {
 
     @ManyToOne
     private SiteUser author;
+
+    // Answer : SiteUser = m : n
+    @ManyToMany
+    private Set<SiteUser> voter;    // 추천인
 }
