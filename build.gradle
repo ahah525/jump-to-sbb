@@ -35,6 +35,8 @@ dependencies {
 	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	// markdown(스프링부트가 내부 관리하지 않으므로 버전 명시)
+	implementation 'org.commonmark:commonmark:0.18.2'
 }
 
 tasks.named('test') {
