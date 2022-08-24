@@ -23,14 +23,15 @@ public class QuestionService {
                 .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
     }
 
-    public Page<Question> getList(int page) {
+    public Page<Question> getList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
 //        sorts.add(Sort.Order.desc("id"));
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
 
-        return questionRepository.findAll(pageable);
+        return questionRepository.findBySubjectContains(kw, pageable);
+//        return questionRepository.findAll(pageable);
     }
 
     public void save(QuestionForm questionForm, SiteUser siteUser) {
