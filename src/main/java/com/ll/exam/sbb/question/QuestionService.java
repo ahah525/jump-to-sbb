@@ -32,7 +32,8 @@ public class QuestionService {
 
 //        return questionRepository.findAll(pageable);
 //        return questionRepository.findBySubjectContains(kw, pageable);
-        return questionRepository.findBySubjectContainsOrContentContains(kw, kw, pageable);
+//        return questionRepository.findBySubjectContainsOrContentContains(kw, kw, pageable);
+        return questionRepository.findBySubjectContainsOrContentContainsOrAuthor_UsernameContains(kw, kw, kw, pageable);
     }
 
     public void save(QuestionForm questionForm, SiteUser siteUser) {
