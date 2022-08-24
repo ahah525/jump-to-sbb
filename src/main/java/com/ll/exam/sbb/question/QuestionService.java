@@ -30,8 +30,9 @@ public class QuestionService {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
 
-        return questionRepository.findBySubjectContains(kw, pageable);
 //        return questionRepository.findAll(pageable);
+//        return questionRepository.findBySubjectContains(kw, pageable);
+        return questionRepository.findBySubjectContainsOrContentContains(kw, kw, pageable);
     }
 
     public void save(QuestionForm questionForm, SiteUser siteUser) {

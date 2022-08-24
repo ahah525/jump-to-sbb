@@ -17,7 +17,11 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, Repos
 
     List<Question> findBySubjectLike(String s);
 
+    // 제목 검색
     Page<Question> findBySubjectContains(String kw, Pageable pageable);
+
+    // 제목 + 내용 검색
+    Page<Question> findBySubjectContainsOrContentContains(String subject, String content, Pageable pageable);
 
     @Transactional
     @Modifying
