@@ -29,6 +29,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, Repos
     // 질문 제목 + 질문 내용 + 질문작성자명 + 답변내용
     Page<Question> findDistinctBySubjectContainsOrContentContainsOrAuthor_UsernameContainsOrAnswerList_ContentContains(String qSubject, String qContent, String qUsername, String aContent, Pageable pageable);
 
+    // 질문 제목 + 질문 내용 + 질문작성자명 + 답변내용 + 답변 작성자명
+    Page<Question> findDistinctBySubjectContainsOrContentContainsOrAuthor_UsernameContainsOrAnswerList_ContentContainsOrAnswerList_Author_UsernameContains(String qSubject, String qContent, String qUsername, String aContent, String aUsername, Pageable pageable);
+
     @Transactional
     @Modifying
     @Query(value = "ALTER TABLE question AUTO_INCREMENT = 1", nativeQuery = true)
