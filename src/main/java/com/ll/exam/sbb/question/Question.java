@@ -27,6 +27,8 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    private Integer hit;    // 조회수
+
     private LocalDateTime createDate;
 
     private LocalDateTime modifyDate;

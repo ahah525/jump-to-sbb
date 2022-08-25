@@ -61,10 +61,12 @@ public class QuestionController {
         return "question_list";
     }
 
+    // 게시글 상세조회
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model, AnswerForm answerForm) {
         Question question = questionService.getQuestion(id);
         model.addAttribute("question", question);
+
         return "question_detail";
     }
 

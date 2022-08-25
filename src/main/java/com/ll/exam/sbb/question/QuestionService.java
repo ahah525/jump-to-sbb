@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,9 +19,12 @@ import java.util.List;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
+    @Transactional
     public Question getQuestion(Long id) {
-        return questionRepository.findById(id)
+        Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
+        increaseHit(question);
+        return question;
     }
 
     public Page<Question> getList(int page, String kw, String order) {
@@ -42,9 +46,16 @@ public class QuestionService {
         return questionRepository.findDistinctBySubjectContainsOrContentContainsOrAuthor_UsernameContainsOrAnswerList_ContentContainsOrAnswerList_Author_UsernameContains(kw, kw, kw, kw, kw, pageable);
     }
 
+    // 조회수 증가
+    private void increaseHit(Question question) {
+        question.setHit(question.getHit() + 1);
+        questionRepository.save(question);
+    }
+
     public void save(QuestionForm questionForm, SiteUser siteUser) {
         Question question = Question.builder()
                 .subject(questionForm.getSubject())
+                .hit(0)
                 .content(questionForm.getContent())
                 .createDate(LocalDateTime.now())
                 .author(siteUser)
