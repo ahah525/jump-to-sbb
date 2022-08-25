@@ -49,13 +49,14 @@ public class QuestionController {
     // 해당 페이지 번호의 게시글 리스트 조회
     @GetMapping("/list")
     // 이 자리에 @ResponseBody가 없으면 resources/question_list/question_list.html 파일을 뷰로 삼는다.
-    public String list(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String kw) {
-        Page<Question> paging = questionService.getList(page, kw);
+    public String list(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String kw, @RequestParam(defaultValue = "new") String order) {
+        Page<Question> paging = questionService.getList(page, kw, order);
 
         // 미래에 실행된 question_list.html 에서
         // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
+        model.addAttribute("order", order);
 
         return "question_list";
     }

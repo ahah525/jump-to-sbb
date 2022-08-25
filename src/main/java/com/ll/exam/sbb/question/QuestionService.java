@@ -23,9 +23,13 @@ public class QuestionService {
                 .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
     }
 
-    public Page<Question> getList(int page, String kw) {
+    public Page<Question> getList(int page, String kw, String order) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
+        if (order.equals("new")) {
+            sorts.add(Sort.Order.desc("createDate"));
+        } else if (order.equals("older")) {
+            sorts.add(Sort.Order.asc("createDate"));
+        }
 //        sorts.add(Sort.Order.desc("id"));
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
